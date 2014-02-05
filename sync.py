@@ -3,24 +3,16 @@
 import os
 import shutil
 from time import gmtime, strftime
-#import Configure
+import Configure
 
-# Znacka stanice
-Station = "ZVPP"
-# Cesta k nezarazenym datum
-path = "/home/roman/MetData/ZVPP/"
-# slozka s audio
-path_audio = "audio/"
-# slozka s obrazky
-path_image = "capture/"
-# slozka s daty
-path_data = "data/"
-# misto k rozrazeni
-path_sort = "/home/roman/MetData/ZVPP/Sort/"
-# jak casto obnovovat
-refresh = 10
-
-newstr="a"
+Station = Configure.Station
+path = Configure.path
+path_audio = Configure.path_audio
+path_image = Configure.path_image
+path_data = Configure.path_data
+path_sort = Configure.path_sort
+refresh = Configure.refresh
+Version = Configure.Version
 
 
 def sort(file, name):

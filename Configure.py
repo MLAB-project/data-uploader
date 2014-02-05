@@ -12,3 +12,5 @@ path_data = "data/"
 path_sort = "/home/roman/MetData/ZVPP/Sort/"
 # jak casto obnovovat
 refresh = 10
+# Verze vstupnich dat eg: "Bolidozor_14"
+Version = "Bolidozor_14"
