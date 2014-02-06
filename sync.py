@@ -87,3 +87,4 @@ def sync():
 
 if __name__ == "__main__":
 	sync()
+	exit(0)
