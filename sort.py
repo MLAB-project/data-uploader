@@ -11,12 +11,11 @@ path_audio = Configure.path_audio
 path_image = Configure.path_image
 path_data = Configure.path_data
 path_sort = Configure.path_sort
-refresh = Configure.refresh
 Version = Configure.Version
 
 
 def sort(file, name):
-	if file=="sync.log":
+	if file=="audio":
 		soubor=path+path_audio
 		soubor_new=path_sort+path_audio+name[:+4]+"/"+name[:+6][-2:]+"/"+name[:+8][-2:]+"/"
 		print "\t\t SORT.PY >>", soubor_new
@@ -45,51 +44,58 @@ def sort(file, name):
 			shutil.copy2(soubor+name, soubor_new+name)
 		#print "\t\t SORT.PY >>", "DATUM ----------------------------DATUM --------DATUM --------DATUM --------DATUM --------"
 
-		
-f = open('Log-sort-py','a')
-if not os.path.exists(path+path_audio):
-	print  "\t\t SORT.PY >>", "Audio source path ", path+path_audio, " does NOT EXIST"
-	f.write('SORT.PY ||  >> audio source path ' + path + path_audio + " does NOT EXIST" +'\n')
+def sortall():
+	f = open('Log-RMDS-py','a')
+	if not os.path.exists(path+path_audio):
+		print  "\t\t SORT.PY >>", "Audio source path ", path+path_audio, " does NOT EXIST"
+		f.write('SORT.PY\t||  >> audio source path ' + path + path_audio + " does NOT EXIST" +'\n')
+		f.close()
+		exit(0)
+	if not os.path.exists(path+path_data):
+		print  "\t\t SORT.PY >>", "Data source path ", path+path_data, " does NOT EXIST"
+		f.write('SORT.PY\t||  >> data source path ' + path + path_data + " does NOT EXIST" +'\n')
+		f.close()
+		exit(0)
+	if not os.path.exists(path+path_image):
+		print  "\t\t SORT.PY >>", "Image source path ", path+path_image, " does NOT EXIST"
+		f.write('SORT.PY\t||  >> image source path ' + path + path_image + " does NOT EXIST" +'\n')
+		f.close()
+		exit(0)
+
+
+	f.write('SORT.PY\t|| Zacatek Sortingu - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
+	dirList=os.listdir(path+path_audio)
+	print "\t\t SORT.PY >>", "----------------------------------- Audio sorting"
+	for fname in dirList:
+		print "\t\t SORT.PY >>", fname
+		if   fname[-4:]==".wav":
+			sort("audio", fname)
+			print "\t\t SORT.PY >>", "++++ zvuk wav"
+		elif fname[-4:]==".aux":
+			print "\t\t SORT.PY >>", "++++ zvuk aux"
+			sort("audio", fname)
+
+	dirList=os.listdir(path+path_data)
+	print "\t\t SORT.PY >>", "----------------------------------- Data sorting"
+	for fname in dirList:
+		print "\t\t SORT.PY >>", fname
+		if fname[-4:]==".dat":
+			print "\t\t SORT.PY >>", "++++ data"
+			sort("data", fname)
+
+	dirList=os.listdir(path+path_image)
+	print "\t\t SORT.PY >>", "----------------------------------- Image sorting"
+	for fname in dirList:
+		print "\t\t SORT.PY >>", fname
+		if fname[-4:]==".jpg":
+			print "\t\t SORT.PY >>", "++++ obrazek"
+			sort("image", fname)
+	f.write('SORT.PY\t||  >>  Konec sort.py - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
 	f.close()
-	exit(0)
-if not os.path.exists(path+path_data):
-	print  "\t\t SORT.PY >>", "Data source path ", path+path_data, " does NOT EXIST"
-	f.write('SORT.PY ||  >> data source path ' + path + path_data + " does NOT EXIST" +'\n')
-	f.close()
-	exit(0)
-if not os.path.exists(path+path_image):
-	print  "\t\t SORT.PY >>", "Image source path ", path+path_image, " does NOT EXIST"
-	f.write('SORT.PY ||  >> image source path ' + path + path_image + " does NOT EXIST" +'\n')
-	f.close()
-	exit(0)
 
 
-f.write('SORT.PY || Zacatek Sortingu - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
-dirList=os.listdir(path+path_audio)
-print "\t\t SORT.PY >>", "----------------------------------- Audio sorting"
-for fname in dirList:
-	print "\t\t SORT.PY >>", fname
-	if   fname[-4:]==".wav":
-		sort("audio", fname)
-		print "\t\t SORT.PY >>", "++++ zvuk wav"
-	elif fname[-4:]==".aux":
-		print "\t\t SORT.PY >>", "++++ zvuk aux"
-		sort("audio", fname)
+def main():
+	sortall()
 
-dirList=os.listdir(path+path_data)
-print "\t\t SORT.PY >>", "----------------------------------- Data sorting"
-for fname in dirList:
-	print "\t\t SORT.PY >>", fname
-	if fname[-4:]==".dat":
-		print "\t\t SORT.PY >>", "++++ data"
-		sort("data", fname)
-
-dirList=os.listdir(path+path_image)
-print "\t\t SORT.PY >>", "----------------------------------- Image sorting"
-for fname in dirList:
-	print "\t\t SORT.PY >>", fname
-	if fname[-4:]==".jpg":
-		print "\t\t SORT.PY >>", "++++ obrazek"
-		sort("image", fname)
-f.write('SORT.PY ||  >>  Konec sort.py - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
-f.close()
+if __name__ == "__main__":
+	main()
