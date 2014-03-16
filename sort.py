@@ -15,6 +15,7 @@ Version = Configure.Version
 
 
 def sort(file, name):
+	shutil.copy2(path+"station.cfg", path_sort+"station.cfg")
 	if file=="audio":
 		soubor=path+path_audio
 		soubor_new=path_sort+path_audio+name[:+4]+"/"+name[:+6][-2:]+"/"+name[:+8][-2:]+"/"

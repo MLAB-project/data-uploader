@@ -17,7 +17,7 @@ Version = Configure.Version
 
 def IsConnected():
     try:
-        urllib2.urlopen("http://62.77.113.30:8080/meteors/ZVPP/").close()
+        urllib2.urlopen("http://space.astro.cz/").close()
     except urllib2.URLError:
         return False
     else:
