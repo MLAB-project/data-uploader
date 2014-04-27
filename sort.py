@@ -44,6 +44,9 @@ def sort(file, name):
 			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat" + "' byl preskocen"
 			shutil.copy2(soubor+name, soubor_new+name)
 		#print "\t\t SORT.PY >>", "DATUM ----------------------------DATUM --------DATUM --------DATUM --------DATUM --------"
+	elif file=="config":
+		shutil.copy2(path+name, path_sort+name)
+
 
 def sortall():
 	f = open('Log-RMDS-py','a')
@@ -83,6 +86,14 @@ def sortall():
 		if fname[-4:]==".dat":
 			print "\t\t SORT.PY >>", "++++ data"
 			sort("data", fname)
+
+	dirList=os.listdir(path)
+	print "\t\t SORT.PY >>", "----------------------------------- Config sorting"
+	for fname in dirList:
+		print "\t\t SORT.PY >>", fname
+		if fname[-4:]==".cfg":
+			print "\t\t SORT.PY >>", "++++ config"
+			sort("config", fname)
 
 	dirList=os.listdir(path+path_image)
 	print "\t\t SORT.PY >>", "----------------------------------- Image sorting"

@@ -41,10 +41,11 @@ def UploadTo(location):
 		f.write('SYNC.PY\t||  >> image sort path ' + path_sort + path_image + " does NOT EXIST" +'\n')
 		f.close()
 		exit(0)
-	f.write('SYNC.PY\t||  >>    Zacatek Uploadu\n')
-	os.system("rsync -vvarz --rsh='ssh -p2223' " + path_sort + path_audio + " " + location + Station + "/audio")
-	os.system("rsync -vvarz --rsh='ssh -p2223' " + path_sort + path_data  + " " + location + Station + "/data")
-	os.system("rsync -vvarz --rsh='ssh -p2223' " + path_sort + path_image + " " + location + Station + "/capture")
+	f.write('SYNC.PY\t||  >>    Zacatek Uploadu\n') # rsync -vvarz ./../MetData/ZVPP/Sort/data/ ZVPP@space.astro.cz:/storage/meteors/ZVPP/ZVPP-R1/data
+	os.system("rsync -vvarz " + path_sort + path_audio + " " + location + Station + "/ZVPP-R1/audio")
+	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + Station + "/ZVPP-R1/data")
+	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Station + "/ZVPP-R1/")
+	os.system("timeout 1700 rsync -vvarz " + path_sort + path_image + " " + location + Station + "/ZVPP-R1/capture")
 	f.write('SYNC.PY\t||  >>    Konec sync.py - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
 	f.close()
  
@@ -52,7 +53,7 @@ def main():
 	InternetAviable = IsConnected()
 	if InternetAviable == True:
 		print "LINK ESTABLISHED"
-		UploadTo("meteor@meteor1.astrozor.cz:meteors/")
+		UploadTo("ZVPP@space.astro.cz:/storage/bolidozor/")
 	else:
 		f = open('Log-RMDS-py','a')
 		f.write('SYNC.PY\t|| Internet connection is NOT aviable' + '\n')

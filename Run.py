@@ -5,6 +5,8 @@ import threading
 import time
 import sort
 import sync
+import subprocess
+
 
 
 
@@ -22,9 +24,11 @@ def FuncRmob():
 
 
 if __name__ == "__main__":
+
 	threadSort = threading.Thread(target=FuncSort)
 	threadSSync = threading.Thread(target=FuncSync)
 	threadSort.start()
 	threadSort.join(600)
 	threadSSync.start()
 	threadSSync.join(1800)
+
