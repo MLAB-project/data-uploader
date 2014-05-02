@@ -9,18 +9,18 @@ import subprocess
 import time
 
 
-TimeVarSort = time.time()
-TimeVarSync = time.time()
+TimeVarSort = 0.0000
+TimeVarSync = 0.0000
 
 def FuncSort():
 	print "\n\n==================================================\nStart Sort\n\n"
 	#sort.main()
-	#subprocess.Popen(["python","sort.py"])
+	subprocess.Popen(["python","sort.py"])
 
 def FuncSync():
 	print "\n\n==================================================\nStart Sync\n\n"
-	#sync.main()
-	#subprocess.Popen(["python","sync.py"])
+	#gsync.main()
+	subprocess.Popen(["python","sync.py"])
 
 
 def EverySec(period, timeVar, func):
@@ -31,7 +31,8 @@ def EverySec(period, timeVar, func):
 			FuncSort()
 		elif func == "Sync":
 			FuncSync()
-
+		elif func == "DiskGuard":
+			pass
 	return timeVar
 
 
