@@ -45,7 +45,7 @@ def UploadTo(location):
 	os.system("rsync -vvarz " + path_sort + path_audio + " " + location + Station + "/ZVPP-R1/audio")
 	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + Station + "/ZVPP-R1/data")
 	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Station + "/ZVPP-R1/")
-	os.system("timeout 1700 rsync -vvarz " + path_sort + path_image + " " + location + Station + "/ZVPP-R1/capture")
+	os.system("timeout 1700 rsync -vvarz " + path_sort + path_image + " " + location + Station + "/ZVPP-R1/capture") # 1700s = 28,3333min
 	f.write('SYNC.PY\t||  >>    Konec sync.py - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
 	f.close()
  
