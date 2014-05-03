@@ -1,5 +1,5 @@
 #!/usr/bin/python
- 
+
 import sys
 import threading
 import time
@@ -38,6 +38,9 @@ def EverySec(period, timeVar, func):
 
 
 if __name__ == "__main__":
+	f = open('Log-RMDS-py','a')
+	f.write('RUN.PY\t|| Aplikace RUN.PY byla spustena v - ' + time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()) + '\n')
+	f.close()
 	try:
 		while True:
 			TimeVarSort = EverySec(900, TimeVarSort, "Sort")
