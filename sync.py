@@ -58,6 +58,7 @@ def main():
 	else:
 		f = open('Log-RMDS-py','a')
 		f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Internet connection is NOT aviable' + '\n')
+
 		f.close()
 		print "LINK DESTROYED!!!", strftime("%d %b %Y %H:%M:%S", gmtime())
 
