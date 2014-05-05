@@ -53,22 +53,22 @@ def sortall():
 
 	if not os.path.exists(path+path_audio):
 		print  "\t\t SORT.PY >>", "Audio source path ", path+path_audio, " does NOT EXIST"
-		f.write('SORT.PY\t||!! audio source path ' + path + path_audio + " does NOT EXIST" +'\n')
+		f.write('SORT.PY\t||!' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' audio source path ' + path + path_audio + " does NOT EXIST" +'\n')
 		f.close()
 		exit(0)
 	if not os.path.exists(path+path_data):
 		print  "\t\t SORT.PY >>", "Data source path ", path+path_data, " does NOT EXIST"
-		f.write('SORT.PY\t||!! data source path ' + path + path_data + " does NOT EXIST" +'\n')
+		f.write('SORT.PY\t||!' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' data source path ' + path + path_data + " does NOT EXIST" +'\n')
 		f.close()
 		exit(0)
 	if not os.path.exists(path+path_image):
 		print  "\t\t SORT.PY >>", "Image source path ", path+path_image, " does NOT EXIST"
-		f.write('SORT.PY\t||!! image source path ' + path + path_image + " does NOT EXIST" +'\n')
+		f.write('SORT.PY\t||!' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' image source path ' + path + path_image + " does NOT EXIST" +'\n')
 		f.close()
 		exit(0)
 
 
-	f.write('SORT.PY\t|| Zacatek Sortingu - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
+	f.write('SORT.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Zacatek Sortingu \n')
 	dirList=os.listdir(path+path_audio)
 	print "\t\t SORT.PY >>", "----------------------------------- Audio sorting"
 	for fname in dirList:
@@ -103,12 +103,12 @@ def sortall():
 		if fname[-4:]==".jpg":
 			print "\t\t SORT.PY >>", "++++ obrazek"
 			sort("image", fname)
-	f.write('SORT.PY\t||\t >>  Konec sort.py - ' + strftime("%a, %d %b %Y %H:%M:%S", gmtime()) + '\n')
+	f.write('SORT.PY\t||\t >> ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Konec sort.py - \n')
 	f.close()
 
 
 def main():
 	sortall()
-
+	print "\t\t SORT.PY >>", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec\n"
 if __name__ == "__main__":
 	main()

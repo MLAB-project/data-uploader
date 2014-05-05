@@ -38,6 +38,9 @@ def EverySec(period, timeVar, func):
 
 
 if __name__ == "__main__":
+	f = open('Log-RMDS-py','a')
+	f.write('\n \nRUN.PY\t|| ' + time.strftime("%d %b %Y %H:%M:%S", time.gmtime()) + ' Aplikace RUN.PY byla spustena\n')
+	f.close()
 	try:
 		while True:
 			TimeVarSort = EverySec(900, TimeVarSort, "Sort")
