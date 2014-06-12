@@ -54,7 +54,7 @@ def main():
 	InternetAviable = IsConnected()
 	if InternetAviable == True:
 		print "LINK ESTABLISHED", strftime("%d %b %Y %H:%M:%S", gmtime())
-		UploadTo("Configure.UserSpace@space.astro.cz:/storage/bolidozor/")
+		UploadTo(Configure.UserSpace+"@space.astro.cz:/storage/bolidozor/")
 	else:
 		f = open('Log-RMDS-py','a')
 		f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Internet connection is NOT aviable' + '\n')
