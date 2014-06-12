@@ -1,7 +1,11 @@
 import array
 
-# Znacka stanice
+# Znacka pajmenovavani souboru 
 Station = "ZVPP"
+# Znacka pozorovani
+StationSpace = "ZVPP-R1"
+# Znacka stanice
+UserSpace = "ZVPP"
 # Cesta k nezarazenym datum
 path = "/home/roman/MetData/ZVPP/"
 # slozka s audio

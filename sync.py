@@ -42,10 +42,10 @@ def UploadTo(location):
 		f.close()
 		exit(0)
 	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Zacatek Uploadu\n') # rsync -vvarz ./../MetData/ZVPP/Sort/data/ ZVPP@space.astro.cz:/storage/meteors/ZVPP/ZVPP-R1/data
-	os.system("rsync -vvarz " + path_sort + path_audio + " " + location + Station + "/ZVPP-R1/audio")
-	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + Station + "/ZVPP-R1/data")
-	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Station + "/ZVPP-R1/")
-	os.system("timeout 1700 rsync -vvarz " + path_sort + path_image + " " + location + Station + "/ZVPP-R1/capture") # 1700s = 28,3333min
+	os.system("rsync -vvarz " + path_sort + path_audio + " " + location + Station + "/" +   Configure.StationSpace + "/audio")
+	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + Station + "/" +   Configure.StationSpace + "/data")
+	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Station + "/" + Configure.StationSpace + "/")
+	os.system("timeout 1700 rsync -vvarz " + path_sort + path_image + " " + location + "/" + Station + "/" + Configure.StationSpace + "/capture") # 1700s = 28,3333min
 	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Konec sync.py \n')
 	f.close()
 	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec"
@@ -54,7 +54,7 @@ def main():
 	InternetAviable = IsConnected()
 	if InternetAviable == True:
 		print "LINK ESTABLISHED", strftime("%d %b %Y %H:%M:%S", gmtime())
-		UploadTo("ZVPP@space.astro.cz:/storage/bolidozor/")
+		UploadTo("Configure.UserSpace@space.astro.cz:/storage/bolidozor/")
 	else:
 		f = open('Log-RMDS-py','a')
 		f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Internet connection is NOT aviable' + '\n')

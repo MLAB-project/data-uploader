@@ -6,6 +6,7 @@ from time import gmtime, strftime
 import Configure
 
 Station = Configure.Station
+# Configure.StationSpace
 path = Configure.path
 path_audio = Configure.path_audio
 path_image = Configure.path_image
