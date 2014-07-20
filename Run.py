@@ -14,12 +14,12 @@ TimeVarSync = 0.0000
 
 def FuncSort():
 	print "\n\n==================================================\nStart Sort\n\n"
-	#sort.main()
+	sort.main()
 	subprocess.Popen(["python","sort.py"])
 
 def FuncSync():
 	print "\n\n==================================================\nStart Sync\n\n"
-	#gsync.main()
+	#sync.main()
 	subprocess.Popen(["python","sync.py"])
 
 

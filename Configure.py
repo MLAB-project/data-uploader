@@ -1,21 +1,20 @@
 import array
 
-# Znacka pajmenovavani souboru 
-Station = "ZVPP"
+# Znacka pajmenovavani souboru
+Station = "OBSUPICE-R1"
 # Znacka pozorovani
-StationSpace = "ZVPP-R1"
+StationSpace = "OBSUPICE-R1"
 # Znacka stanice
-UserSpace = "ZVPP"
+UserSpace = "OBSUPICE"
 # Cesta k nezarazenym datum
-path = "/home/roman/MetData/ZVPP/"
-# slozka s audio
-path_audio = "audio/"
-# slozka s obrazky
-path_image = "capture/"
-# slozka s daty
+path = "/media/nfs/OBSUPICE/OBSUPICE-R1/"
+# slozka s meteory ("audio/","meteors")
+path_audio = "meteors/"
+# slozka s obrazky ("capture/","snapshots/")
+path_image = "snapshots/"
+# slozka s daty ("data/","data/")
 path_data = "data/"
 # misto k rozrazeni
-path_sort = "/home/roman/MetData/ZVPP/Sort/"
-# Verze vstupnich dat eg: "Bolidozor_14"
-Version = "Bolidozor_14"
-
+path_sort = "/media/nfs/OBSUPICE/OBSUPICE-R1/Sort/"
+# Verze vstupnich dat eg: "Bolidozor_14", "RadObs_14_7"
+Version = "RadObs_14_7"

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os
+import os, sys
 import shutil
 from time import gmtime, strftime
 import Configure
@@ -104,12 +104,57 @@ def sortall():
 		if fname[-4:]==".jpg":
 			print "\t\t SORT.PY >>", "++++ obrazek"
 			sort("image", fname)
-	f.write('SORT.PY\t||\t >> ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Konec sort.py - \n')
+	f.write('SORT.PY\t||\t >> ' + strftime("%Y%m%d%H", gmtime()) + ' Konec sort.py - \n')
 	f.close()
+
+def SortSpecLab():
+	list = os.listdir(Configure.path+Configure.path_data)
+	for soubor in list:
+		path_add = soubor[:4]+"/"+soubor[4:][:2]+"/"+soubor[6:][:2]+"/"
+		print soubor + " -- " + path_add
+		print soubor [:10] + "is not "+ strftime("%Y%m%d%H", gmtime())
+		if not os.path.exists(Configure.path_sort+Configure.path_data+path_add):
+			print "LABEL: >> Folder is NOT exist"
+			os.makedirs(Configure.path_sort+Configure.path_data+path_add)
+		if soubor [:10] is not strftime("%Y%m%d%H", gmtime()):
+			shutil.copy2(Configure.path+Configure.path_data+soubor, Configure.path_sort+Configure.path_data+path_add+soubor)
+		else:
+			shutil.copy2(Configure.path+Configure.path_data+soubor, Configure.path_sort+Configure.path_data+path_add+soubor)
+
+def SortRadObs():
+	list = os.listdir(Configure.path+Configure.path_data)
+	for soubor in list:
+		if soubor[:1] is not ".":
+			path_local = Configure.path_sort+Configure.path_data+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"
+			print path_local + soubor
+			if not os.path.exists(path_local):
+				os.makedirs(path_local)
+			shutil.copy2(Configure.path+Configure.path_data+soubor, path_local+soubor)
+	list = os.listdir(Configure.path+Configure.path_audio)
+	for soubor in list:
+	    if soubor[:1] is not ".":
+		    path_local = Configure.path_sort+Configure.path_audio+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"+soubor[8:10]+"/"
+		    print path_local + soubor
+		    if not os.path.exists(path_local):
+		        os.makedirs(path_local)
+		    shutil.copy2(Configure.path+Configure.path_audio+soubor, path_local+soubor)
+	list = os.listdir(Configure.path+Configure.path_image)
+	for soubor in list:
+	    if soubor[:1] is not ".":
+		    path_local = Configure.path_sort+Configure.path_image+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"+soubor[8:10]+"/"
+		    print path_local + soubor
+		    if not os.path.exists(path_local):
+				os.makedirs(path_local)
+		    shutil.copy2(Configure.path+Configure.path_image+soubor, path_local+soubor)
+
 
 
 def main():
-	sortall()
+	if Configure.Version is "Bolidozor_14":
+		SortSpecLab()
+	elif Configure.Version is "RadObs_14_7":
+		SortRadObs()
+	#sortall()
 	print "\t\t SORT.PY >>", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec\n"
 if __name__ == "__main__":
 	main()
