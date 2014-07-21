@@ -4,11 +4,11 @@ import array
 Station = "OBSUPICE-R1"
 # Znacka pozorovani
 StationSpace = "OBSUPICE-R1"
-# Znacka stanice
+# jmeno stanice
 UserSpace = "OBSUPICE"
 # Cesta k nezarazenym datum
 path = "/media/nfs/OBSUPICE/OBSUPICE-R1/"
-# slozka s meteory ("audio/","meteors")
+# slozka s raw meteory ("audio/","meteors")
 path_audio = "meteors/"
 # slozka s obrazky ("capture/","snapshots/")
 path_image = "snapshots/"

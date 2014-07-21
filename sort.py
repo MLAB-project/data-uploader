@@ -129,7 +129,10 @@ def SortRadObs():
 			print path_local + soubor
 			if not os.path.exists(path_local):
 				os.makedirs(path_local)
-			shutil.copy2(Configure.path+Configure.path_data+soubor, path_local+soubor)
+			if soubor[:10] is not strftime("%Y%m%d%H", gmtime()):
+				shutil.move(Configure.path+Configure.path_data+soubor, path_local+soubor)
+			else:
+				shutil.copy2(Configure.path+Configure.path_data+soubor, path_local+soubor)
 	list = os.listdir(Configure.path+Configure.path_audio)
 	for soubor in list:
 	    if soubor[:1] is not ".":
@@ -137,7 +140,7 @@ def SortRadObs():
 		    print path_local + soubor
 		    if not os.path.exists(path_local):
 		        os.makedirs(path_local)
-		    shutil.copy2(Configure.path+Configure.path_audio+soubor, path_local+soubor)
+		    shutil.move(Configure.path+Configure.path_audio+soubor, path_local+soubor)
 	list = os.listdir(Configure.path+Configure.path_image)
 	for soubor in list:
 	    if soubor[:1] is not ".":
@@ -145,7 +148,14 @@ def SortRadObs():
 		    print path_local + soubor
 		    if not os.path.exists(path_local):
 				os.makedirs(path_local)
-		    shutil.copy2(Configure.path+Configure.path_image+soubor, path_local+soubor)
+		    shutil.move(Configure.path+Configure.path_image+soubor, path_local+soubor)
+	list = os.listdir(Configure.path)
+        for soubor in list:
+	    print "!!!!-----! " + soubor	
+            if  os.path.isfile(Configure.path+soubor):
+		print " - file"
+		path_local = Configure.path_sort
+		shutil.copy2(Configure.path+soubor, Configure.path_sort+soubor)
 
 
 

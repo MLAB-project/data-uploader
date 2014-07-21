@@ -19,7 +19,7 @@ def FuncSort():
 
 def FuncSync():
 	print "\n\n==================================================\nStart Sync\n\n"
-	#sync.main()
+	sync.main()
 	subprocess.Popen(["python","sync.py"])
 
 
