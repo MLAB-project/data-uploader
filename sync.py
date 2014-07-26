@@ -4,15 +4,15 @@ import urllib2
 import os
 import shutil
 from time import gmtime, strftime
-import Configure
+import config
 
-Station = Configure.Station
-path = Configure.path
-path_audio = Configure.path_audio
-path_image = Configure.path_image
-path_data = Configure.path_data
-path_sort = Configure.path_sort
-Version = Configure.Version
+Station = config.Station
+path = cofig.path
+path_audio = config.path_audio
+path_image = config.path_image
+path_data = config.path_data
+path_sort = config.path_sort
+Version = config.Version
 
 
 def IsConnected():
@@ -42,14 +42,14 @@ def UploadTo(location):
 		f.close()
 		exit(0)
 	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Zacatek Uploadu\n') # rsync -vvarz ./../MetData/ZVPP/Sort/data/ ZVPP@space.astro.cz:/storage/meteors/ZVPP/ZVPP-R1/data
-	print "-------"+"rsync -vvarz " + path_sort + path_image + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_image
-	print "-------"+"rsync -vvarz " + path_sort + path_data  + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_data
-	print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Configure.UserSpace + "/" + Configure.StationSpace + "/"
-	print "-------"+"timeout 1700 rsync -vvarz " + path_sort + path_audio + " " + location + "/" + Configure.UserSpace + "/" + Configure.StationSpace + "/"+Configure.path_audio
-	os.system("rsync -vvarz " + path_sort + path_image + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_image)
-	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_data)
-	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Configure.UserSpace + "/" + Configure.StationSpace + "/")
-	os.system("timeout 1700 rsync -vvarz " + path_sort + path_audio + " " + location + "/" + Configure.UserSpace + "/" + Configure.StationSpace + "/"+Configure.path_audio) # 1700s = 28,3333min
+	print "-------"+"rsync -vvarz " + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image
+	print "-------"+"rsync -vvarz " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data
+	print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/"
+	print "-------"+"timeout 1700 rsync -vvarz " + path_sort + path_audio + " " + location + "/" + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio
+	os.system("rsync -vvarz " + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image)
+	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
+	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/")
+	os.system("timeout 1700 rsync -vvarz " + path_sort + path_audio + " " + location + "/" + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio) # 1700s = 28,3333min
 	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Konec sync.py \n')
 	f.close()
 	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec"
