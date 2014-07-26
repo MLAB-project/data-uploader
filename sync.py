@@ -42,6 +42,10 @@ def UploadTo(location):
 		f.close()
 		exit(0)
 	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Zacatek Uploadu\n') # rsync -vvarz ./../MetData/ZVPP/Sort/data/ ZVPP@space.astro.cz:/storage/meteors/ZVPP/ZVPP-R1/data
+	print "-------"+"rsync -vvarz " + path_sort + path_image + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_image
+	print "-------"+"rsync -vvarz " + path_sort + path_data  + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_data
+	print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Configure.UserSpace + "/" + Configure.StationSpace + "/"
+	print "-------"+"timeout 1700 rsync -vvarz " + path_sort + path_audio + " " + location + "/" + Configure.UserSpace + "/" + Configure.StationSpace + "/"+Configure.path_audio
 	os.system("rsync -vvarz " + path_sort + path_image + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_image)
 	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + Configure.UserSpace + "/" +   Configure.StationSpace + "/"+Configure.path_data)
 	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + Configure.UserSpace + "/" + Configure.StationSpace + "/")
