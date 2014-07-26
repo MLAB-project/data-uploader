@@ -7,7 +7,7 @@ from time import gmtime, strftime
 import config
 
 Station = config.Station
-path = cofig.path
+path = config.path
 path_audio = config.path_audio
 path_image = config.path_image
 path_data = config.path_data
