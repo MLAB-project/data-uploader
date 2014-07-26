@@ -60,7 +60,7 @@ def main():
 	InternetAviable = IsConnected()
 	if InternetAviable:
 		print "Pripojeno", strftime("%d %b %Y %H:%M:%S", gmtime())
-		UploadTo("OBSUPICE@space.astro.cz:/storage/bolidozor/")
+		UploadTo(config.UserSpace + "@space.astro.cz:/storage/bolidozor/")
 
 	else:
 		f = open('Log-RMDS-py','a')
