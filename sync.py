@@ -64,9 +64,9 @@ def main():
 
 	else:
 		f = open('Log-RMDS-py','a')
-		f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Internet connection is NOT aviable' + '\n')
+		f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Internet connection is NOT available' + '\n')
 		f.close()
-		print "Internet connection is NOT aviable", strftime("%d %b %Y %H:%M:%S", gmtime())
+		print "Internet connection is NOT available", strftime("%d %b %Y %H:%M:%S", gmtime())
 
 if __name__ == "__main__":
 	main()

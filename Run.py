@@ -22,6 +22,12 @@ def FuncSync():
 	sync.main()
 	subprocess.Popen(["python","sync.py"])
 
+def FuncServerSetup():
+	print "\n\n==================================================\nStart Server Setup\n\n"
+	sync.main()
+	subprocess.Popen(["python","serversetup.py"])
+
+
 
 def EverySec(period, timeVar, func):
 	if timeVar+period <= time.time():
@@ -41,6 +47,7 @@ if __name__ == "__main__":
 	f = open('Log-RMDS-py','a')
 	f.write('\n \nRUN.PY\t|| ' + time.strftime("%d %b %Y %H:%M:%S", time.gmtime()) + ' Aplikace RUN.PY byla spustena\n')
 	f.close()
+	FuncServerSetup()
 	try:
 		while True:
 			TimeVarSort = EverySec(900, TimeVarSort, "Sort")
