@@ -16,5 +16,7 @@ path_image = "snapshots/"
 path_data = "data/"
 # misto k rozrazeni
 path_sort = "/media/nfs/OBSUPICE/OBSUPICE-R1/Sort/"
+# kolik se ma uvolnit mista po dosazini 1GB limitu [GB]
+datavolume = 2279
 # Verze vstupnich dat eg: "Bolidozor_14", "RadObs_14_7"
 Version = "RadObs_14_7"
