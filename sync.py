@@ -25,7 +25,7 @@ def IsConnected():
 
 def UploadTo(location):
 	f = open('Log-RMDS-py','a')
-	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Zacatek synchronizace \n')
+	f.write('SYNC.PY\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' Start of synchronisation \n')
 	if not os.path.exists(path_sort+path_audio):
 		print  "\t\t SYNC.PY >>", "Audio sort path ", path_sort+path_audio, " does NOT EXIST"
 		f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '  >> audio sort path ' + path_sort + path_audio + " does NOT EXIST" +'\n')
@@ -41,7 +41,7 @@ def UploadTo(location):
 		f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' >> image sort path ' + path_sort + path_image + " does NOT EXIST" +'\n')
 		f.close()
 		exit(0)
-	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Zacatek Uploadu\n') # rsync -vvarz ./../MetData/ZVPP/Sort/data/ ZVPP@space.astro.cz:/storage/meteors/ZVPP/ZVPP-R1/data
+	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>   Start of Upload\n')
 	print "-------"+"rsync -vvarz " + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image
 	print "-------"+"rsync -vvarz " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data
 	print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/"
@@ -50,9 +50,9 @@ def UploadTo(location):
 	os.system("rsync -vvarz " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
 	os.system("rsync -vvarz --exclude='*/*'" + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/")
 	os.system("timeout 1700 rsync -vvarz " + path_sort + path_audio + " " + location + "/" + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio) # 1700s = 28,3333min
-	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Konec sync.py \n')
+	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Finish of upload \n')
 	f.close()
-	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec"
+	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Synchronisation was finished!"
  
 
  
@@ -60,7 +60,7 @@ def main():
 	InternetAviable = IsConnected()
 	if InternetAviable:
 		print "Pripojeno", strftime("%d %b %Y %H:%M:%S", gmtime())
-		UploadTo(config.UserSpace + "@space.astro.cz:/storage/bolidozor/")
+		UploadTo(config.UserName + "@space.astro.cz:/storage/bolidozor/")
 
 	else:
 		f = open('Log-RMDS-py','a')

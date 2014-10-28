@@ -1,10 +1,10 @@
 import array
 
-# Station name
-Station = "OBSUPICE"
-# Station observation identification
+# Name of station (which appears in data file names)
+Station = "OBSUPICE-R1"
+# Project session name
 StationSpace = "OBSUPICE-R1"
-# Server data folder for username
+# Project session name (Server data folder for given username)
 UserSpace = "OBSUPICE"
 # user name which will be used for login to server. 
 UserName = "zebrak"
