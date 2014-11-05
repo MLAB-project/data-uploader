@@ -44,7 +44,7 @@ def sort(file, name):
 		else:
 			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat" + "' byl preskocen"
 			shutil.copy2(soubor+name, soubor_new+name)
-		#print "\t\t SORT.PY >>", "DATUM ----------------------------DATUM --------DATUM --------DATUM --------DATUM --------"
+		#print "\t\t SORT.PY >>", "DATUM "
 	elif file=="config":
 		shutil.copy2(path+name, path_sort+name)
 
@@ -120,6 +120,8 @@ def SortSpecLab():
 			shutil.copy2(config.path+config.path_data+soubor, config.path_sort+config.path_data+path_add+soubor)
 		else:
 			shutil.copy2(config.path+config.path_data+soubor, config.path_sort+config.path_data+path_add+soubor)
+	global SortEnd
+	SortEnd = False
 
 def SortRadObs():
 	list = os.listdir(config.path+config.path_data)
@@ -156,15 +158,23 @@ def SortRadObs():
 		print " - file"
 		path_local = config.path_sort
 		shutil.copy2(config.path+soubor, config.path_sort+soubor)
+	global SortEnd
+	SortEnd = False
 
 
 
 def main():
-	if config.Version is "Bolidozor_14":
-		SortSpecLab()
-	elif config.Version is "RadObs_14_7":
-		SortRadObs()
-	#sortall()
+	global SortEnd
+	SortEnd = True
+	while SortEnd:
+		try:
+			if config.Version is "Bolidozor_14":
+				SortSpecLab()
+			elif config.Version is "RadObs_14_7":
+				SortRadObs()
+		except Exception, e:
+			print "ERROR in SORT.PY", e
+
 	print "\t\t SORT.PY >>", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec\n"
 if __name__ == "__main__":
 	main()
