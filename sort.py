@@ -42,7 +42,7 @@ def sort(file, name):
 		if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv":
 			os.rename(soubor+name,soubor_new+name)
 		else:
-			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat" + "' byl preskocen"
+			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv" + "' byl preskocen"
 			shutil.copy2(soubor+name, soubor_new+name)
 		#print "\t\t SORT.PY >>", "DATUM "
 	elif file=="config":
