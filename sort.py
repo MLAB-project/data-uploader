@@ -39,11 +39,11 @@ def sort(file, name):
 		print "\t\t SORT.PY >>", soubor_new
 		if not os.path.exists(soubor_new):
 			os.makedirs(soubor_new)
-		if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv":
-			os.rename(soubor+name,soubor_new+name)
-		else:
-			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv" + "' byl preskocen"
-			shutil.copy2(soubor+name, soubor_new+name)
+		#if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv":
+		#	os.rename(soubor+name,soubor_new+name)
+		#else:
+		#	print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv" + "' byl preskocen"
+		shutil.copy2(soubor+name, soubor_new+name)
 		#print "\t\t SORT.PY >>", "DATUM "
 	elif file=="config":
 		shutil.copy2(path+name, path_sort+name)
