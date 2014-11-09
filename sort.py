@@ -39,7 +39,7 @@ def sort(file, name):
 		print "\t\t SORT.PY >>", soubor_new
 		if not os.path.exists(soubor_new):
 			os.makedirs(soubor_new)
-		if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.dat":
+		if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat":
 			os.rename(soubor+name,soubor_new+name)
 		else:
 			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat" + "' byl preskocen"
