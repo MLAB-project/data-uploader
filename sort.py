@@ -85,7 +85,7 @@ def sortall():
 	print "\t\t SORT.PY >>", "----------------------------------- Data sorting"
 	for fname in dirList:
 		print "\t\t SORT.PY >>", fname
-		if fname[-4:]==".dat":
+		if fname[-4:]=="_meta.csv":
 			print "\t\t SORT.PY >>", "++++ data"
 			sort("data", fname)
 
