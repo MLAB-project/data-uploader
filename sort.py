@@ -39,10 +39,10 @@ def sort(file, name):
 		print "\t\t SORT.PY >>", soubor_new
 		if not os.path.exists(soubor_new):
 			os.makedirs(soubor_new)
-		#if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv":
-		#	os.rename(soubor+name,soubor_new+name)
-		#else:
-		#	print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv" + "' byl preskocen"
+		if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv":
+			os.rename(soubor+name,soubor_new+name)
+		else:
+			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv" + "' byl preskocen"
 		shutil.copy2(soubor+name, soubor_new+name)
 		#print "\t\t SORT.PY >>", "DATUM "
 	elif file=="config":
@@ -131,7 +131,7 @@ def SortRadObs():
 			print path_local + soubor
 			if not os.path.exists(path_local):
 				os.makedirs(path_local)
-			if soubor[:10] is not strftime("%Y%m%d%H", gmtime()):
+			if soubor[:10] != strftime("%Y%m%d%H", gmtime()):
 				shutil.move(config.path+config.path_data+soubor, path_local+soubor)
 			else:
 				shutil.copy2(config.path+config.path_data+soubor, path_local+soubor)
