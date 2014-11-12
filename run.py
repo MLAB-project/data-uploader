@@ -14,22 +14,22 @@ TimeVarSort = 0.0000
 TimeVarSync = 0.0000
 
 def FuncSort():
-	print "\n\n==================================================\nStart Sort\n\n"
+	print "\n\n==================================================\nStarting Sort\n\n"
 	sort.main()
 	subprocess.Popen(["python","sort.py"])
 
 def FuncSync():
-	print "\n\n==================================================\nStart Sync\n\n"
+	print "\n\n==================================================\nStarting Sync\n\n"
 	sync.main()
 	subprocess.Popen(["python","sync.py"])
 
 def FuncServerSetup():
-	print "\n\n==================================================\nStart Server Setup\n\n"
+	print "\n\n==================================================\nStarting Server Setup\n\n"
 	sync.main()
 	subprocess.Popen(["python","serversetup.py"])
 
 def FuncDiskGuard():
-	print "\n\n==================================================\nStart DiskGuard\n\n"
+	print "\n\n==================================================\nStarting DiskGuard\n\n"
 	sync.main()
 	subprocess.Popen(["python","DiskGuard.py"])
 
@@ -50,8 +50,8 @@ def EverySec(period, timeVar, func):
 
 
 if __name__ == "__main__":
-	f = open('Log-RMDS-py','a')
-	f.write('\n \nRUN.PY\t\t|| ' + time.strftime("%d %b %Y %H:%M:%S", time.gmtime()) + ' Aplikace RUN.PY byla spustena\n')
+	f = open('./uploader.log','a')
+	f.write('\n \nRUN.PY\t\t|| ' + time.strftime("%d %b %Y %H:%M:%S", time.gmtime()) + 'Data synchronisation system was started.\n')
 	f.close()
 	FuncServerSetup()
 	try:
