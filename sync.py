@@ -42,14 +42,11 @@ def UploadTo(location):
 		f.close()
 		exit(0)
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>   Start of Upload\n')
-	#print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image
-	#print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data
-	#print "-------"+"rsync -vvarz --exclude='*/*'" + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/"
-	#print "-------"+"timeout 1000 rsync -vvarz --exclude='*/*'" + path_sort + path_audio + " " + location + "/" + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio
-	os.system("rsync -vaz --bwlimit=150K --exclude='*/*'" + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image)
-	os.system("rsync -vaz --bwlimit=150K --exclude='*/*'" + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
-	os.system("rsync -vaz --bwlimit=150K --exclude='*/*'" + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/")
-	os.system("timeout 1000 rsync -varz --bwlimit=150K --exclude='*/*'" + path_sort + path_audio + " " + location + "/" + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio) # 1700s = 28,3333min
+	# os.system
+	os.system("rsync -vaz " + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image)
+	os.system("rsync -vaz " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
+	os.system("rsync -vaz " + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/")
+	os.system("timeout 1000 rsync -vaz " + path_sort + path_audio + " " + location + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio) # 1700s = 28,3333min
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Finish of upload \n')
 	f.close()
 	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Synchronisation was finished!"
