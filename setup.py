@@ -20,7 +20,7 @@ setup(
     description      = 'Common tools and functions for MLAB python modules.',
     long_description = rmds_data_uploader.__doc__,
     url              = 'https://github.com/bolidozor/RMDS-data-uploader',
-
+    
     #packages    = ['pymlab', 'pymlab.sensors', 'pymlab.tests', ],
     packages    = find_packages("src"),
     package_dir = {'': 'src'},
@@ -29,9 +29,9 @@ setup(
     keywords = ['MLAB', 'bolidozor', ],
     license     = 'Lesser General Public License v3',
     #download_url = 'https://github.com/bolidozor/RMDS-data-uploader',
-
+    
     test_suite = 'tests',
-
+    
     classifiers = [
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
