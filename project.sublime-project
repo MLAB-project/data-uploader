@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+			"folder_exclude_patterns": ["*.egg-info"]
+		},
+		{
+			"path": "../python-mlab-utils",
+			"folder_exclude_patterns": ["*.egg-info"]
+		}
+	],
+	"build_systems":
+    [
+        {
+            "name": "Unit Tests",
+            "cmd": ["./setup.py", "test"]
+        }
+    ]
+}
