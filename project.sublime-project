@@ -4,11 +4,18 @@
 		{
 			"follow_symlinks": true,
 			"path": ".",
-			"folder_exclude_patterns": ["*.egg-info"]
+			"folder_exclude_patterns": ["*.egg-info", "*.egg"],
+			"file_exclude_patterns": ["*.egg"]
 		},
 		{
 			"path": "../python-mlab-utils",
-			"folder_exclude_patterns": ["*.egg-info"]
+			"folder_exclude_patterns": ["*.egg-info", "*.egg"],
+			"file_exclude_patterns": ["*.egg"]
+		},
+		{
+			"path": "../bolidozor-log-server",
+			"folder_exclude_patterns": ["*.egg-info", "*.egg"],
+			"file_exclude_patterns": ["*.egg"]
 		}
 	],
 	"build_systems":
