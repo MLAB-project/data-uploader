@@ -1,38 +1,22 @@
 RMDS data uploader
 ==================
 
- Python utility which sort measured data to folders and upload it to data server. 
-
-Configuration
--------------
-
-Edit config.py as is desired for station configuration.
-
-Example: 
-
-        # Name of station (it appears in data file names)
-        Station = "uFlu-R0"
-        # Project session name
-        StationSpace = "uFlu-R0"
-        # Observatory name
-        UserSpace = "uFlu"
-        # Unsorted data files
-        path = "/home/odroid/Bolidozor/uFlu/uFlu-R0/"
-        # Folder with unsorted raw meteor data records ("audio/","meteors")
-        path_audio = "meteors/"
-        # Folder with snapshots ("capture/","snapshots/")
-        path_image = "snapshots/"
-        # Folder with metadata ("data/","data/")
-        path_data = "data/"
-        # Folder to sort data files
-        path_sort = "/home/odroid/Bolidozor/uFlu/uFlu-R0/Sort/"
-        # Version of input data files eg: "Bolidozor_14", "RadObs_14_7"
-        Version = "RadObs_14_7"
+Python utility which sorts measured data to folders and upload it to data
+server. 
 
 
 Usage
 -----
 
-Execute the Run.py script
+The `setuptools` package creates entry script named `bzupld` which is installed
+in `/usr/local/bin` if the package is installed.
 
-        $ python Run.py
+        # To install the package
+        $ python setup.py install
+        
+        # To run the daemon
+        $ sudo bzupld
+        
+        # To kill the daemon
+        $ ./kill_bzupld
+
