@@ -42,9 +42,9 @@ def sort(file, name):
 		if not name == strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat":
 			os.rename(soubor+name,soubor_new+name)
 		else:
-			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + ".dat" + "' byl preskocen"
-			shutil.copy2(soubor+name, soubor_new+name)
-		#print "\t\t SORT.PY >>", "DATUM ----------------------------DATUM --------DATUM --------DATUM --------DATUM --------"
+			print "\t\t SORT.PY >>", "##### Soubor: '" + strftime("%Y%m%d%H", gmtime()) + "_" + Station + "_meta.csv" + "' byl preskocen"
+		shutil.copy2(soubor+name, soubor_new+name)
+		#print "\t\t SORT.PY >>", "DATUM "
 	elif file=="config":
 		shutil.copy2(path+name, path_sort+name)
 
@@ -85,7 +85,7 @@ def sortall():
 	print "\t\t SORT.PY >>", "----------------------------------- Data sorting"
 	for fname in dirList:
 		print "\t\t SORT.PY >>", fname
-		if fname[-4:]==".dat":
+		if fname[-4:]=="_meta.csv":
 			print "\t\t SORT.PY >>", "++++ data"
 			sort("data", fname)
 
@@ -120,6 +120,8 @@ def SortSpecLab():
 			shutil.copy2(config.path+config.path_data+soubor, config.path_sort+config.path_data+path_add+soubor)
 		else:
 			shutil.copy2(config.path+config.path_data+soubor, config.path_sort+config.path_data+path_add+soubor)
+	global SortEnd
+	SortEnd = False
 
 def SortRadObs():
 	list = os.listdir(config.path+config.path_data)
@@ -129,7 +131,7 @@ def SortRadObs():
 			print path_local + soubor
 			if not os.path.exists(path_local):
 				os.makedirs(path_local)
-			if soubor[:10] is not strftime("%Y%m%d%H", gmtime()):
+			if soubor[:10] != strftime("%Y%m%d%H", gmtime()):
 				shutil.move(config.path+config.path_data+soubor, path_local+soubor)
 			else:
 				shutil.copy2(config.path+config.path_data+soubor, path_local+soubor)
@@ -156,15 +158,23 @@ def SortRadObs():
 		print " - file"
 		path_local = config.path_sort
 		shutil.copy2(config.path+soubor, config.path_sort+soubor)
+	global SortEnd
+	SortEnd = False
 
 
 
 def main():
-	if config.Version is "Bolidozor_14":
-		SortSpecLab()
-	elif config.Version is "RadObs_14_7":
-		SortRadObs()
-	#sortall()
+	global SortEnd
+	SortEnd = True
+	while SortEnd:
+		try:
+			if config.Version is "Bolidozor_14":
+				SortSpecLab()
+			elif config.Version is "RadObs_14_7":
+				SortRadObs()
+		except Exception, e:
+			print "ERROR in SORT.PY", e
+
 	print "\t\t SORT.PY >>", strftime("%d %b %Y %H:%M:%S", gmtime()), " Konec\n"
 if __name__ == "__main__":
 	main()
