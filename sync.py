@@ -44,7 +44,7 @@ def UploadTo(location):
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>   Start of Upload\n')
 	# os.system
 	os.system("rsync -vaz --remove-source-files " + path_sort + path_image + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image)
-	os.system("rsync -vaz --remove-source-files " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
+	os.system("rsync -vaz " + path_sort + path_data  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
 	os.system("rsync -vaz --remove-source-files " + path_sort + " " + location + config.UserSpace + "/" + config.StationSpace + "/")
 	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_sort + path_audio + " " + location + config.UserSpace + "/" + config.StationSpace + "/"+config.path_audio) # 1700s = 28,3333min
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Finish of upload \n')
