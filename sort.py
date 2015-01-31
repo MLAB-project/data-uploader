@@ -21,13 +21,15 @@ def SortRadObs():
 		if soubor[:1] is not ".":
 			path_local = config.path_sort+config.path_data+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"
 			print path_local + soubor
-			f = os.path.getmtime(path_local+soubor)
+			f = os.path.getmtime(config.path+config.path_data+soubor)
 			t = time.time()
 			if not os.path.exists(path_local):
 				os.makedirs(path_local)
-			if t-f > 5400: # pokud je starsi nez 1,5 hodiny
+			if int(t-f) > 5400: # pokud je starsi nez 1,5 hodiny
+				print "move"
 				shutil.move(config.path+config.path_data+soubor, path_local+soubor)
 			else:
+				print "copy, delta t=", int(t-f)
 				shutil.copy2(config.path+config.path_data+soubor, path_local+soubor)
 	list = os.listdir(config.path+config.path_audio)
 	for soubor in list:
