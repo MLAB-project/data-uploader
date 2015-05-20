@@ -13,17 +13,17 @@ import sys
 
 if __name__ == "__main__":
 	#gui.main()
-	print "generování pro:"+ config.Station +"@"+ config.UserName
-	print "otevírání souboru" + config.path +"/"+ config.path_data + "."
+        year = 2015
+        month = 5
 
-	year = 2015
-	month = 5
+	print "generování pro:"+ config.Station +"@"+ config.UserName
+	print "otevírání souboru" + config.path_sort + "/" + config.path_data + "/" + str(year) + "/" + str(month).zfill(2) + "/" + config.Station + "_" + config.UserName + "_" + str(year) + "_" +str(month).zfill(2)+"_badData.npy"
 
 
 	#manthData = np.load("ZVPP_ZVPP-R2_dataMask_"+str(year) + "_" +str(month)+".npy")
 			#np.save("ZVPP_ZVPP-R2_dataMask_"+str(year) + "_" +str(month)+".npy", monthDataMask)
 	try:
-		monthDataMask = np.load(config.path + "/" + config.path_data + "/" + config.Station + "_" + config.UserName + str(year) + "_" +str(month)+".npy")
+		monthDataMask = np.load(config.path_sort + "/" + config.path_data + "/" + str(year) + "/" + str(month).zfill(2) + "/" + config.Station + "_" + config.UserName + "_" + str(year) + "_" +str(month).zfill(2)+"_badData.npy")
 	except Exception, e:
 	#	monthDataMask = np.fill((24,32), True, bool)
 		monthDataMask = np.ones((24,32), dtype=bool)
@@ -59,7 +59,8 @@ if __name__ == "__main__":
 					print monthDataMask[x,y],
 				print ""
 		elif var == 's':
-			np.save(config.path + "/" + config.path_data + "/" + config.Station + "_" + config.UserName +str(year) + "_" +str(month)+".npy", monthDataMask)
+       			np.save(config.path_sort + "/" + config.path_data + "/" + str(year) + "/" + str(month).zfill(2) + "/" + config.Station + "_" + config.UserName + "_" + str(year) + "_" + str(month).zfill(2) +"_badData.npy", monthDataMask)
+		#	np.save(config.path + "/" + config.path_data + "/" + config.Station + "_" + config.UserName +str(year) + "_" +str(month)+".npy", monthDataMask)
 
 			run = False
 		elif var == 'c':
