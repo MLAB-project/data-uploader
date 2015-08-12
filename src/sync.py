@@ -44,24 +44,25 @@ def UploadTo(location, SyncEnd):
 		f.close()
 		exit(0)
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>   Start of Upload\n')
-	# os.system
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_image_sort + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_image)
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_audio_sort + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_data)
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_data_sort  + " " + location + config.UserSpace + "/" +   config.StationSpace + "/")
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_data       + " " + location + config.UserSpace + "/" +   config.StationSpace + "/"+config.path_audio) # 1700s = 28,3333min
+	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_image_sort + " " + location + config.UserSpace + "/" +   config.StationSpace )
+	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_audio_sort + " " + location + config.UserSpace + "/" +   config.StationSpace )
+	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_sort  + " " + location + config.UserSpace + "/" +   config.StationSpace )
+	os.system("timeout 1000 rsync -vaz --remove-source-files home/odroid/bolidozor/station/ "+ location+config.UserSpace +"/"+ config.StationSpace ) # 1700s = 28,3333min
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Finish of upload \n')
 	f.close()
 	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Synchronisation was finished!"
 	#global SyncEnd
-	SyncEnd = False
+	SyncEnd = True
 	return SyncEnd
 
  
 
  
 def main():
-	SyncEnd = True
-	while SyncEnd == True:
+	SyncEnd = False
+	ErrMax = 10
+	ErrCount = 0
+	while SyncEnd != True:
 		try:
 			InternetAviable = IsConnected()
 			if InternetAviable:
@@ -75,6 +76,10 @@ def main():
 				print "Internet connection is NOT available", strftime("%d %b %Y %H:%M:%S", gmtime())
 		except Exception, e:
 			print "ERROR in SYNC.PY", e
+	ErrCount += 1
+	if ErrCount >= ErrMax:
+		SyncEnd = True
+		print "Chyb ERR,", ErrCount
 		
 if __name__ == "__main__":
 	main()
