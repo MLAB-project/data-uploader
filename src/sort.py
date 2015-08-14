@@ -20,22 +20,23 @@ Version = config.Version
 
 def SortRadObs(SortEnd):
     list = os.listdir(config.path_data)
-    print list
+    print "list data", list
     for soubor in list:
         if soubor[:1] is not ".":
+            print "?????????????", soubor
             path_local = config.path_sort+"/"+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"
             print(config.path_data  + soubor, path_local +soubor)
             if not os.path.exists(path_local):
                 os.makedirs(path_local)
-                print("data1",path_data + soubor, path_local +soubor)
             if soubor[:10] != strftime("%Y%m%d%H", gmtime()):
-                shutil.move(path_data + soubor, path_local +soubor)
-                print("data2",path_data + soubor, path_local +soubor)
+                shutil.move(path_data + "/" + soubor, path_local+ "/" +soubor)
+                print("data_mv",path_data + "/" + soubor, path_local+ "/" +soubor)
             else:
-                shutil.copy2(path_data+ soubor, path_local +soubor)
+                shutil.copy2(path_data + "/"+ soubor, path_local+ "/" +soubor)
+                print("data_cp",path_data + soubor, path_local+ "/" +soubor)
 
     list = os.listdir(config.path_audio)
-    print list
+    print "list audio", list
     for soubor in list:
         if soubor[:1] is not ".":
             path_local = path_audio_sort+"/"+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"+soubor[8:10]+"/"
@@ -46,7 +47,7 @@ def SortRadObs(SortEnd):
             print("audio",path_audio + "/" + soubor, path_local+ "/" +soubor)
 
     list = os.listdir(path_image)
-    print list
+    print "list img", list
     for soubor in list:
         if soubor[:1] is not ".":
             path_local = config.path_image_sort+"/"+soubor[:4]+"/"+soubor[4:6]+"/"+soubor[6:8]+"/"+soubor[8:10]+"/"
@@ -56,15 +57,15 @@ def SortRadObs(SortEnd):
             shutil.move(path_image + "/" + soubor, path_local+ "/" +soubor)
             print("image", path_image + "/" + soubor, path_local+ "/" +soubor)
 
-    list = os.listdir(config.path_data)
-    print list
-    for soubor in list:
-        print "!!!!-----! " + soubor    
-        if  os.path.isfile(config.path+soubor):
-            print " - file"
-            path_local = path_sort
-            shutil.copy2(path_data+"/" +soubor, path_sort+"/" +soubor)
-            print("path",path_data+"/" +soubor, path_sort+"/" +soubor)
+#    list = os.listdir(config.path_data)
+#    print list
+#    for soubor in list:
+#        print "!!!!-----! " + soubor    
+#        if  os.path.isfile(config.path+soubor):
+#            print " - file"
+#            path_local = path_sort
+#            shutil.copy2(path_data+"/" +soubor, path_sort+"/" +soubor)
+#            print("path",path_data+"/" +soubor, path_sort+"/" +soubor)
 
     SortEnd = True
     return True

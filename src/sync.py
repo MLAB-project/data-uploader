@@ -35,7 +35,7 @@ def UploadTo(location, SyncEnd):
 		exit(0)
 	if not os.path.exists(path_sort):
 		print  "\t\t SYNC.PY >>", "Data sort path ", path_sort, " does NOT EXIST"
-		f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' >> data sort path ' + path_data_sort + " does NOT EXIST" +'\n')
+		f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + ' >> data sort path '  +  path_sort  +  " does NOT EXIST" +'\n')
 		f.close()
 		exit(0)
 	if not os.path.exists(path_image_sort):
@@ -44,11 +44,23 @@ def UploadTo(location, SyncEnd):
 		f.close()
 		exit(0)
 	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>   Start of Upload\n')
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_image_sort + " " + location + config.UserSpace + "/" +   config.StationSpace )
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_audio_sort + " " + location + config.UserSpace + "/" +   config.StationSpace )
-	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_sort  + " " + location + config.UserSpace + "/" +   config.StationSpace )
-	os.system("timeout 1000 rsync -vaz --remove-source-files home/odroid/bolidozor/station/ "+ location+config.UserSpace +"/"+ config.StationSpace ) # 1700s = 28,3333min
-	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Finish of upload \n')
+
+	print "cesty jsou takto SNAP:", path_image_sort, location+config.UserSpace+'/'+config.StationSpace
+	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_image_sort[:-1] + " " + location + config.UserSpace + "/" +   config.StationSpace)
+
+        print "cesty jsou takto RAW:", path_audio_sort, location+config.UserSpace+'/'+config.StationSpace
+	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_audio_sort[:-1] + " " + location + config.UserSpace + "/" +   config.StationSpace)
+
+        print "cesty jsou takto CSV:", path_sort, location+config.UserSpace+ '/' + config.StationSpace
+	os.system("timeout 1000 rsync -vaz --remove-source-files " + path_sort[:-1]  + " " + location + config.UserSpace + "/" +   config.StationSpace )
+#	os.system("timeout 100  rsync -vazd --exclude='*/' /home/odroid/bolidozor/station/ "+ location+config.UserSpace +"/"+ config.StationSpace ) # 1700s = 28,3333min
+#	f.write('SYNC.PY\t\t|| ' + strftime("%d %b %Y %H:%M:%S", gmtime()) + '\t >>    Finish of upload \n')
+
+
+        print "cesty jsou takto GLOB:", path_image_sort, location+config.UserSpace+'/'+config.StationSpace
+	print("timeout 1000 rsync -vaz --remove-source-files " + path_image_sort + " " + location + config.UserSpace + "/" +   config.StationSpace +"/" )
+
+
 	f.close()
 	print "SYNC.PY \t|| ", strftime("%d %b %Y %H:%M:%S", gmtime()), " Synchronisation was finished!"
 	#global SyncEnd
