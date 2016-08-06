@@ -50,6 +50,12 @@ def EverySec(period, timeVar, func):
 
 
 if __name__ == "__main__":
+	if len(sys.argv) != 2:
+	    sys.stderr.write("Invalid number of arguments.\n")
+	    sys.stderr.write("Usage: %s CONFIGFILE \n" % (sys.argv[0], ))
+	    sys.exit(1)
+	config_path = sys.argv[1]
+
 	f = open('./uploader.log','a')
 	f.write('\n \nRUN.PY\t\t|| ' + time.strftime("%d %b %Y %H:%M:%S", time.gmtime()) + 'Data synchronisation system was started.\n')
 	f.close()

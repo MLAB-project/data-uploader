@@ -8,17 +8,18 @@ import config
 Station = config.Station
 # config.StationSpace
 path = config.path
-path_audio = config.path_audio
-path_audio_sort = config.path_audio_sort
+#path_audio = config.path_audio
+#path_audio_sort = config.path_audio_sort
 path_image = config.path_image
 path_image_sort = config.path_image_sort
-path_data = config.path_data
-path_sort = config.path_sort
+#path_data = config.path_data
+#path_sort = config.path_sort
 Version = config.Version
 
 
 
 def SortRadObs(SortEnd):
+    '''
     list = os.listdir(config.path_data)
     print "list data", list
     for soubor in list:
@@ -46,6 +47,8 @@ def SortRadObs(SortEnd):
             shutil.move(path_audio + "/" + soubor, path_local+ "/" +soubor)
             print("audio",path_audio + "/" + soubor, path_local+ "/" +soubor)
 
+    '''
+
     list = os.listdir(path_image)
     print "list img", list
     for soubor in list:
@@ -56,16 +59,6 @@ def SortRadObs(SortEnd):
                 os.makedirs(path_local)
             shutil.move(path_image + "/" + soubor, path_local+ "/" +soubor)
             print("image", path_image + "/" + soubor, path_local+ "/" +soubor)
-
-#    list = os.listdir(config.path_data)
-#    print list
-#    for soubor in list:
-#        print "!!!!-----! " + soubor    
-#        if  os.path.isfile(config.path+soubor):
-#            print " - file"
-#            path_local = path_sort
-#            shutil.copy2(path_data+"/" +soubor, path_sort+"/" +soubor)
-#            print("path",path_data+"/" +soubor, path_sort+"/" +soubor)
 
     SortEnd = True
     return True
