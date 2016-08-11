@@ -89,7 +89,7 @@ def main():
 			InternetAviable = IsConnected()
 			if InternetAviable:
 				print "Pripojeno", strftime("%d %b %Y %H:%M:%S", gmtime())
-				SyncEnd = UploadTo(config.UserName + "@space.astro.cz:/storage/ionozor/", SyncEnd)
+				SyncEnd = UploadTo(config.UserName + "@space.astro.cz:/storage/ionozor/VLF/", SyncEnd)
 
 			else:
 				f = open('Log-RMDS-py','a')
