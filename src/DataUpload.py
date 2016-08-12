@@ -28,13 +28,20 @@ class dataUpload():
         ssh.connect(value["storage_hostname"], username = value["storage_username"])
         sftp = ssh.open_sftp()
 
-        if value["project"] == "bolidozor" or value["project"] == "ionozor":
+        if value["project"] == "bolidozor":
             #TODO: udelat lepsi zpusob ziskani cest z config souboru
 
             sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
             sync_folders.append(value["configurations"][0]["children"][0]["children"][0]["output_dir"])
             sync_folders.append(value["configurations"][0]["children"][0]["children"][1]["output_dir"])
             sync_folders.append(value["project_home_folder"])
+
+        elif value["project"] == "ionozor":
+            sync_folders.append(value["configurations"][1]["children"][0]["children"][0]["output_dir"])
+            sync_folders.append(value["project_home_folder"])
+
+        else:
+            print "Neznamy projekt"
 
         for i, folder in enumerate(sync_folders):
             print i, folder
