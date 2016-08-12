@@ -76,8 +76,7 @@ class dataUpload():
                         #sftp.mkdir(os.path.dirname(remote_path)+ "/") # touto cesto nelze vytvorit vice slozek zaroven TODO: otestovat jine moznosti
                         ssh.exec_command('mkdir -p ' + repr(os.path.dirname(remote_path)) + "/" )
                     sftp.put(local_path, remote_path)
-                    
-                    
+
                     # ziskani kontrolnich souctu na remote serveru a lokalnich souboru
                     stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
                     md5_remote = stdout_remote.read()

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 import sys
 import optparse
@@ -20,11 +22,10 @@ def main():
                 print "CHYBA: "
                 print e
             wait_time = (last_start + 60 * 1000 - time.time())
-            
+
             if wait_time < time.time():
                 print "wait", wait_time, "ms  \n\n\n"
                 time.sleep(wait_time/1000)
-    
 
 if __name__ == '__main__':
     main()
