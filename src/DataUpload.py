@@ -44,10 +44,13 @@ class dataUpload():
                 remote_path = None
                 local_path = os.path.join(folder,file)
                 if any(x in file for x in ["meta.csv", "freq.csv"]):
-                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file)
+                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
 
-                elif any(x in file for x in ["snap.fits","met.fits","raws.fits"]):
-                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file[8:10], file)
+                elif any(x in file for x in ["snap.fits"]):
+                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "snapshots", file[0:4], file[4:6], file[6:8], file[8:10], file)
+
+                elif any(x in file for x in ["met.fits","raws.fits"]):
+                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "meteors", file[0:4], file[4:6], file[6:8], file[8:10], file)
 
                 elif "station" == os.path.basename(folder) and os.path.isfile(local_path):
                     remote_path = os.path.join(remoteBasePath, file)
