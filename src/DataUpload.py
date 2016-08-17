@@ -40,8 +40,12 @@ class dataUpload():
             sync_folders.append(value["configurations"][1]["children"][0]["children"][0]["output_dir"])
             sync_folders.append(value["project_home_folder"])
 
+        elif value["project"] == "meteo":
+            sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
+            sync_folders.append(value["project_home_folder"])
+
         else:
-            print "Neznamy projekt"
+            print "Uknown project."
 
         for i, folder in enumerate(sync_folders):
             print i, folder
