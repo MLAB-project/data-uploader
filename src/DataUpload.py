@@ -59,10 +59,12 @@ class dataUpload():
                 elif any(x in file for x in ["met.fits","raws.fits"]):
                     remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "meteors", file[0:4], file[4:6], file[6:8], file[8:10], file)
 
-                elif "station" == os.path.basename(folder) and os.path.isfile(local_path):
+                elif "station" in os.path.dirname(folder) and os.path.isfile(local_path):
+                    print "file in station folder:", file
                     remote_path = os.path.join(remoteBasePath, file)
 
                 else:
+                    print os.path.dirname(folder),
                     print "Preskakuji:", folder, file
 
                 if remote_path:
@@ -83,7 +85,7 @@ class dataUpload():
                     md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
 
                     #print md5_remote, md5
-                    if md5 in md5_remote and "station" not in os.path.basename(folder): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
+                    if md5 in md5_remote and "station" not in os.path.dirname(folder): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
                         self.UploadEvent(remote_path, md5)
                         if ".csv" not in local_path:
                             os.remove(local_path)
@@ -112,8 +114,9 @@ class dataUpload():
         #print ""
         print payload
         try:
-            r = requests.get('http://meteor1.astrozor.cz:5252/api/DataUpload', params=payload)
+            #r = requests.get('http://meteor1.astrozor.cz:5252/api/DataUpload', params=payload)
             #print(r.url)
+            pass
         except Exception, e:
             print e
 
