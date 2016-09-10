@@ -48,52 +48,54 @@ class dataUpload():
             TimeStartFolder = time.time()
             filelist = os.listdir(folder)
             for i2, file in enumerate(filelist):
-                remote_path = None
-                local_path = os.path.join(folder,file)
-                if any(x in file for x in ["meta.csv", "freq.csv"]):
-                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
+                try:
+                    remote_path = None
+                    local_path = os.path.join(folder,file)
+                    if any(x in file for x in ["meta.csv", "freq.csv"]):
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
 
-                elif any(x in file for x in ["snap.fits"]):
-                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "snapshots", file[0:4], file[4:6], file[6:8], file[8:10], file)
+                    elif any(x in file for x in ["snap.fits"]):
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file[8:10], file)
 
-                elif any(x in file for x in ["met.fits","raws.fits"]):
-                    remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "meteors", file[0:4], file[4:6], file[6:8], file[8:10], file)
+                    elif any(x in file for x in ["met.fits","raws.fits"]):
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file[8:10], file)
 
-                elif "station" == os.path.basename(folder) and os.path.isfile(local_path):
-                    remote_path = os.path.join(remoteBasePath, file)
+                    elif "station" == os.path.basename(folder) and os.path.isfile(local_path):
+                        remote_path = os.path.join(remoteBasePath, file)
 
-                else:
-                    print "Preskakuji:", folder, file
+                    else:
+                        print "Preskakuji:", folder, file
 
-                if remote_path:
-                    print local_path, remote_path
-                    # zkontrolovat jestli existuje slozka na remote server
-                    try:
-                        sftp.chdir(os.path.dirname(remote_path))
-                    except IOError:
-                        # popripade ji vytvorit
-                        print "create folder:", os.path.dirname(remote_path)
-                        #sftp.mkdir(os.path.dirname(remote_path)+ "/") # touto cesto nelze vytvorit vice slozek zaroven TODO: otestovat jine moznosti
-                        ssh.exec_command('mkdir -p ' + repr(os.path.dirname(remote_path)) + "/" )
-                    sftp.put(local_path, remote_path)
+                    if remote_path:
+                        print local_path, remote_path
+                        # zkontrolovat jestli existuje slozka na remote server
+                        try:
+                            sftp.chdir(os.path.dirname(remote_path))
+                        except IOError:
+                            # popripade ji vytvorit
+                            print "create folder:", os.path.dirname(remote_path)
+                            #sftp.mkdir(os.path.dirname(remote_path)+ "/") # touto cesto nelze vytvorit vice slozek zaroven TODO: otestovat jine moznosti
+                            ssh.exec_command('mkdir -p ' + repr(os.path.dirname(remote_path)) + "/" )
+                        sftp.put(local_path, remote_path)
 
-                    # ziskani kontrolnich souctu na remote serveru a lokalnich souboru
-                    stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
-                    md5_remote = stdout_remote.read()
-                    md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
+                        # ziskani kontrolnich souctu na remote serveru a lokalnich souboru
+                        stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
+                        md5_remote = stdout_remote.read()
+                        md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
 
-                    #print md5_remote, md5
-                    if md5 in md5_remote and "station" not in os.path.basename(folder): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
-                        self.UploadEvent(remote_path, md5)
-                        if ".csv" not in local_path:
-                            os.remove(local_path)
-                            print "odstraneno"
-                        elif os.path.getmtime(local_path) < time.time() - 2*60*100: # ochrana pred smazanim metadat, do kterych se zapisuje prubezne
-                            os.remove(local_path)
-                            print "odstanen starsi dokument"
-                        else:
-                            print "bude odrstaneno"
-
+                        #print md5_remote, md5
+                        if md5 in md5_remote and "station" not in os.path.basename(folder): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
+                            self.UploadEvent(remote_path, md5)
+                            if ".csv" not in local_path:
+                                os.remove(local_path)
+                                print "odstraneno"
+                            elif os.path.getmtime(local_path) < time.time() - 2*60*100: # ochrana pred smazanim metadat, do kterych se zapisuje prubezne
+                                os.remove(local_path)
+                                print "odstanen starsi dokument"
+                            else:
+                                print "bude odrstaneno"
+                except Exception, e:
+                    print "chyba zapisu" + repr(e)     
         sftp.close()
         ssh.close()
 
@@ -112,7 +114,8 @@ class dataUpload():
         #print ""
         print payload
         try:
-            r = requests.get('http://meteor1.astrozor.cz:5252/api/DataUpload', params=payload)
+            pass
+            r = requests.get('http://meteor1.astrozor.cz:5253/api/upload/bolidozor/', params=payload)
             #print(r.url)
         except Exception, e:
             print e
