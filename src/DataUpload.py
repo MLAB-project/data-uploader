@@ -101,13 +101,12 @@ class dataUpload():
                             else:
                                 print "bude odrstaneno"
                 except Exception, e:
-                    print "chyba zapisu" + repr(e)     
+                    print "chyba zapisu" + repr(e)
 
         sftp.close()
         ssh.close()
 
     def UploadEvent(self, file, md5):
-        # http://meteor1.astrozor.cz:5252/api/DataUpload
         path, file = os.path.split(file)
         payload = {
             'filelocation':  path,
@@ -118,13 +117,10 @@ class dataUpload():
             'server': 5,
             'uploadtime': time.strftime('%Y-%m-%d %H:%M:%S')
         }
-        #print ""
         print payload
         try:
-            #r = requests.get('http://meteor1.astrozor.cz:5252/api/DataUpload', params=payload)
-            #print(r.url)
+            r = requests.get('http://meteor1.astrozor.cz:5253/api/upload/bolidozor/', params=payload)
             pass
         except Exception, e:
             print e
 
-        
