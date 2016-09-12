@@ -90,7 +90,7 @@ class dataUpload():
                         md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
 
                         #print md5_remote, md5
-                        if md5 in md5_remote and "station" not in os.path.dirname(folder): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
+                        if md5 in md5_remote and "station" not in os.path.basename(os.path.normpath(folder)): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
                             self.UploadEvent(remote_path, md5)
                             if ".csv" not in local_path:
                                 os.remove(local_path)
@@ -100,6 +100,8 @@ class dataUpload():
                                 print "odstanen starsi dokument"
                             else:
                                 print "bude odrstaneno"
+                        else:
+                            print "nelze odeslat", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
                 except Exception, e:
                     print "chyba zapisu" + repr(e)
 
