@@ -20,7 +20,7 @@ class dataUpload():
         self.value = value
 
         sync_folders = []
-        remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["configurations"][0]["children"][0]["origin"])
+        remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["origin"])
 
         #navazani ssh spojeni pomoci ssh klice a username z cfg souboru
         ssh = paramiko.SSHClient()
@@ -43,6 +43,11 @@ class dataUpload():
         elif value["project"] == "meteo":
             sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
             sync_folders.append(value["project_home_folder"])
+
+        elif value["project"] == "geozor":
+            sync_folders.append(value["data_path"])
+            sync_folders.append(value["project_home_folder"])
+
 
         else:
             print "Uknown project."
@@ -90,7 +95,7 @@ class dataUpload():
                         md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
 
                         #print md5_remote, md5
-                        if md5 in md5_remote and "station" not in os.path.basename(os.path.normpath(folder)): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
+                        """if md5 in md5_remote and "station" not in os.path.basename(os.path.normpath(folder)): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
                             self.UploadEvent(remote_path, md5)
                             if ".csv" not in local_path:
                                 os.remove(local_path)
@@ -102,6 +107,7 @@ class dataUpload():
                                 print "bude odrstaneno"
                         else:
                             print "nelze odeslat", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
+                        """
                 except Exception, e:
                     print "chyba zapisu" + repr(e)
 
@@ -115,7 +121,7 @@ class dataUpload():
             'filename': file,
             'filename_original':  file,
             'checksum': md5,
-            'station': self.value["configurations"][0]["children"][0]["origin"],
+            'station': self.value["origin"],
             'server': 5,
             'uploadtime': time.strftime('%Y-%m-%d %H:%M:%S')
         }
