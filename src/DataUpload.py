@@ -60,7 +60,7 @@ class dataUpload():
                 try:
                     remote_path = None
                     local_path = os.path.join(folder,file)
-                    if any(x in file for x in ["meta.csv", "freq.csv"]):
+                    if any(x in file for x in ["meta.csv", "freq.csv", "data.csv"]):
                         remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
 
                     elif any(x in file for x in ["snap.fits"]):
