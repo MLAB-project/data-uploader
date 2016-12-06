@@ -37,6 +37,7 @@ class dataUpload():
             sync_folders.append(value["project_home_folder"])
 
         elif value["project"] == "ionozor":
+            sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
             sync_folders.append(value["configurations"][1]["children"][0]["children"][0]["output_dir"])
             sync_folders.append(value["project_home_folder"])
 
@@ -57,6 +58,9 @@ class dataUpload():
                     local_path = os.path.join(folder,file)
                     if any(x in file for x in ["meta.csv", "freq.csv"]):
                         remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
+
+                    elif any(x in file for x in ["data.tsv"]):
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file)
 
                     elif any(x in file for x in ["snap.fits"]):
                         remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "snapshots", file[0:4], file[4:6], file[6:8], file[8:10], file)
