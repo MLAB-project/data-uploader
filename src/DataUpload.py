@@ -121,7 +121,7 @@ class dataUpload():
         }
         print payload
         try:
-            r = requests.get('http://meteor1.astrozor.cz:5253/api/upload/%s/' %(self.value["project"]), params=payload)
+            r = requests.get('http://api.vo.mlab.cz/upload/%s/' %(self.value["project"]), params=payload)
             pass
         except Exception, e:
             print e
