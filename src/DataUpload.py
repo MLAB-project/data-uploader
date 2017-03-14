@@ -100,7 +100,7 @@ class dataUpload():
                             if ".csv" not in local_path:
                                 os.remove(local_path)
                                 print "removed"
-                            elif os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starší než 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
+                            elif os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starsi nez 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
                                 os.remove(local_path)
                                 print "removed older file"
                             else:
