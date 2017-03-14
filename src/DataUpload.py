@@ -75,7 +75,7 @@ class dataUpload():
 
                     else:
                         print os.path.dirname(folder),
-                        print "Preskakuji:", folder, file
+                        print "Skipped:", folder, file
 
                     if remote_path:
                         print local_path, remote_path
@@ -95,21 +95,21 @@ class dataUpload():
                         md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
 
                         #print md5_remote, md5
-                        """if md5 in md5_remote and "station" not in os.path.basename(os.path.normpath(folder)): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
+                        if md5 in md5_remote and "station" not in os.path.basename(os.path.normpath(folder)): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/stotion
                             self.UploadEvent(remote_path, md5)
                             if ".csv" not in local_path:
                                 os.remove(local_path)
-                                print "odstraneno"
-                            elif os.path.getmtime(local_path) < time.time() - 2*60*100: # ochrana pred smazanim metadat, do kterych se zapisuje prubezne
+                                print "removed"
+                            elif os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starší než 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
                                 os.remove(local_path)
-                                print "odstanen starsi dokument"
+                                print "removed older file"
                             else:
-                                print "bude odrstaneno"
+                                print "will be removed"
                         else:
-                            print "nelze odeslat", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
-                        """
+                            print "Unable to send", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
+                        
                 except Exception, e:
-                    print "chyba zapisu" + repr(e)
+                    print "Write error" + repr(e)
 
         sftp.close()
         ssh.close()
