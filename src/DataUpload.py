@@ -125,7 +125,7 @@ class dataUpload():
             'filename': file,
             'filename_original':  file,
             'checksum': md5,
-            'station': self.value["origin"],
+            'station': self.value["configurations"][0]["children"][0]["origin"],
             'server': 5,
             'uploadtime': time.strftime('%Y-%m-%d %H:%M:%S')
         }
