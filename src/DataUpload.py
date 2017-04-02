@@ -20,7 +20,6 @@ class dataUpload():
         self.value = value
 
         sync_folders = []
-        remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["origin"])
 
         #navazani ssh spojeni pomoci ssh klice a username z cfg souboru
         ssh = paramiko.SSHClient()
@@ -35,19 +34,23 @@ class dataUpload():
             sync_folders.append(value["configurations"][0]["children"][0]["children"][0]["output_dir"])
             sync_folders.append(value["configurations"][0]["children"][0]["children"][1]["output_dir"])
             sync_folders.append(value["project_home_folder"])
+            remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["configurations"][0]["children"][0]["origin"])
 
         elif value["project"] == "ionozor":
             sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
             sync_folders.append(value["configurations"][1]["children"][0]["children"][0]["output_dir"])
             sync_folders.append(value["project_home_folder"])
+            remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["configurations"][0]["children"][0]["origin"])
 
         elif value["project"] == "meteo":
             sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
             sync_folders.append(value["project_home_folder"])
+            remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["origin"])
 
         elif value["project"] == "geozor":
             sync_folders.append(value["data_path"])
             sync_folders.append(value["project_home_folder"])
+            remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["origin"])
 
 
         else:
