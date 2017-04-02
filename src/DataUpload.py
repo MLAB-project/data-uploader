@@ -20,7 +20,7 @@ class dataUpload():
         self.value = value
 
         sync_folders = []
-        remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["configurations"][0]["children"][0]["origin"])
+        remoteBasePath = os.path.join(value["storage_stationpath"], value["storage_username"], value["origin"])
 
         #navazani ssh spojeni pomoci ssh klice a username z cfg souboru
         ssh = paramiko.SSHClient()
@@ -44,6 +44,11 @@ class dataUpload():
             sync_folders.append(value["configurations"][0]["children"][0]["metadata_path"])
             sync_folders.append(value["project_home_folder"])
 
+        elif value["project"] == "geozor":
+            sync_folders.append(value["data_path"])
+            sync_folders.append(value["project_home_folder"])
+
+
         else:
             print "Uknown project."
 
@@ -55,7 +60,7 @@ class dataUpload():
                 try:
                     remote_path = None
                     local_path = os.path.join(folder,file)
-                    if any(x in file for x in ["meta.csv", "freq.csv"]):
+                    if any(x in file for x in ["meta.csv", "freq.csv", "data.csv"]):
                         remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
 
                     elif any(x in file for x in ["snap.fits"]):
@@ -70,7 +75,7 @@ class dataUpload():
 
                     else:
                         print os.path.dirname(folder),
-                        print "Preskakuji:", folder, file
+                        print "Skipped:", folder, file
 
                     if remote_path:
                         print local_path, remote_path
@@ -94,16 +99,17 @@ class dataUpload():
                             self.UploadEvent(remote_path, md5)
                             if ".csv" not in local_path:
                                 os.remove(local_path)
-                                print "odstraneno"
-                            elif os.path.getmtime(local_path) < time.time() - 2*60*100: # ochrana pred smazanim metadat, do kterych se zapisuje prubezne
+                                print "removed"
+                            elif os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starsi nez 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
                                 os.remove(local_path)
-                                print "odstanen starsi dokument"
+                                print "removed older file"
                             else:
-                                print "bude odrstaneno"
+                                print "will be removed"
                         else:
-                            print "nelze odeslat", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
+                            print "Unable to send", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
+                        
                 except Exception, e:
-                    print "chyba zapisu" + repr(e)
+                    print "Write error" + repr(e)
 
         sftp.close()
         ssh.close()
@@ -115,7 +121,7 @@ class dataUpload():
             'filename': file,
             'filename_original':  file,
             'checksum': md5,
-            'station': self.value["configurations"][0]["children"][0]["origin"],
+            'station': self.value["origin"],
             'server': 5,
             'uploadtime': time.strftime('%Y-%m-%d %H:%M:%S')
         }
