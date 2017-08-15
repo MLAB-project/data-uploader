@@ -27,6 +27,8 @@ class dataUpload():
         ssh.connect(value["storage_hostname"], username = value["storage_username"])
         sftp = ssh.open_sftp()
 
+        self.sendHello() #zaregistruje se do RTbolidozoru
+
         if value["project"] == "bolidozor":
             #TODO: udelat lepsi zpusob ziskani cest z config souboru
 
@@ -120,6 +122,27 @@ class dataUpload():
 
         sftp.close()
         ssh.close()
+
+    def sendHello(self):
+        value = self.value
+        print value['observatory']
+        payload = {
+            'observatory_name': value['observatory'][0]['name'],
+            'observatory_owner_login': value['observatory'][0]['owner.login'],
+            'observatory_lat': value['observatory'][0]['lat'],
+            'observatory_lon': value['observatory'][0]['lon'],
+            'observatory_alt': value['observatory'][0]['alt'],
+            'observatory_location': value['observatory'][0]['location'],
+            'station': self.value["configurations"][0]["children"][0]["origin"],
+            'hw_version': value['HWversion']
+        }
+        print payload
+        try:
+            r = requests.get('http://vo.astro.cz/api/hello/%s/' %(value["project"]), params=payload)
+            pass
+        except Exception, e:
+            print e
+
 
     def UploadEvent(self, file, md5):
         path, file = os.path.split(file)
