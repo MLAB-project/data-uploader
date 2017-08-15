@@ -65,16 +65,16 @@ class dataUpload():
                     remote_path = None
                     local_path = os.path.join(folder,file)
                     if any(x in file for x in ["meta.csv", "freq.csv", "data.csv"]):
-                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file)
 
                     elif any(x in file for x in ["data.tsv"]):
-                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file)
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file)
 
                     elif any(x in file for x in ["snap.fits"]):
-                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "snapshots", file[0:4], file[4:6], file[6:8], file[8:10], file)
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file[8:10], file)
 
                     elif any(x in file for x in ["met.fits","raws.fits"]):
-                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "meteors", file[0:4], file[4:6], file[6:8], file[8:10], file)
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), file[0:4], file[4:6], file[6:8], file[8:10], file)
 
                     elif "station" in os.path.dirname(folder) and os.path.isfile(local_path):
                         print "file in station folder:", file
@@ -134,7 +134,7 @@ class dataUpload():
         }
         print payload
         try:
-            r = requests.get('http://api.vo.mlab.cz/upload/%s/' %(self.value["project"]), params=payload)
+            r = requests.get('http://vo.astro.cz/api/upload/%s/' %(self.value["project"]), params=payload)
             pass
         except Exception, e:
             print e
