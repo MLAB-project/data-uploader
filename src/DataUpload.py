@@ -70,11 +70,11 @@ class dataUpload():
                     local_path = os.path.join(folder,file) # cesta k souboru na stanici
                     type_folder = os.path.basename(os.path.normpath(folder)) # tato promena obsahuje hodnoty jako 'snapshots, meteors, data' (podslozka v rootu stanice)
                     if any(x in file for x in ["meta.csv", "freq.csv", "data.csv"]):
-                        remote_path = os.path.normpath(remoteBasePath, type_folder, file[0:4], file[4:6], file[6:8], file)
+                        remote_path = os.path.join(remoteBasePath, type_folder, file[0:4], file[4:6], file[6:8], file)
                         remove = 2
 
                     elif any(x in file for x in ["data.tsv"]):
-                        remote_path = os.path.normpath(remoteBasePath, type_folder, file[0:4], file[4:6], file)
+                        remote_path = os.path.join(remoteBasePath, type_folder, file[0:4], file[4:6], file)
                         remove = 2
 
                     elif any(x in file for x in ["snap.fits"]):
@@ -102,6 +102,7 @@ class dataUpload():
                         except IOError:
                             print "create folder:", os.path.dirname(remote_path)
                             ssh.exec_command('mkdir -p ' + repr(os.path.dirname(remote_path)) + "/" )
+                            sftp.chdir(os.path.dirname(remote_path))
                         
                         # odeslat soubor na space
                         sftp.put(local_path, remote_path)
@@ -116,20 +117,21 @@ class dataUpload():
                             print "soubor se nepodarilo odeslat na server", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
                         else:
                             #TODO: overeni, jestli se jedna o data, nebo o soubory ve slozce /station/ se musi delat v api na blackhole
-                            status = self.UploadEvent(remote_path, md5)
-                            if status == 1:
-                                if remove ==1:
-                                    os.remove(local_path)
-                                    print "removed"
-                                elif remove == 2 and os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starsi nez 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
-                                    os.remove(local_path)
-                                    print "removed older file"
-                                else:
-                                    print "Soubor zustava na stanici (neodstranuje se)"
+                            print "soubor je na serveru"
+                            if remove ==1:
+                                os.remove(local_path)
+                                print "removed"
+                            elif remove == 2 and os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starsi nez 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
+                                os.remove(local_path)
+                                print "removed older file"
                             else:
-                                neindexovano += [status]
+                                print "Soubor zustava na stanici (neodstranuje se)"
+                            status = self.UploadEvent(remote_path, md5)
+                            if 1 == status:  pass
+                            else: neindexovano += [status]
 
-                        print neindexovano
+
+                        #print neindexovano
 
                         
                 except Exception, e:
@@ -172,11 +174,12 @@ class dataUpload():
             'server': 1,
             'uploadtime': time.strftime('%Y-%m-%d %H:%M:%S')
         }
-        print payload
+        #print payload
         try:
-            r = requests.get('http://vo.astro.cz/api/upload/%s/' %(self.value["project"]), params=payload, timeout=2)
+            r = requests.get('http://vo.astro.cz/api/upload/%s/' %(self.value["project"]), params=payload, timeout=1)
             return 1
         except Exception, e:
-            print e
+            #print e, e[0]
+            print "blackhole timeout"
             return payload
 
