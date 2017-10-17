@@ -21,7 +21,7 @@ def main():
             except Exception, e:
                 print "CHYBA: "
                 print e
-            wait_time = (last_start + 60 * 1000 - time.time())
+            wait_time = (last_start + 3600 * 1000 - time.time())
 
             if wait_time < time.time():
                 print "wait", wait_time, "ms  \n\n\n"

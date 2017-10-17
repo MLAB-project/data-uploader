@@ -46,7 +46,7 @@ class dataUpload():
             sync_folders.append(value["project_home_folder"])
 
         elif value["project"] == "geozor":
-            sync_folders.append(value["data_path"])
+            sync_folders.append(value["data_upload"])
             sync_folders.append(value["project_home_folder"])
 
 
@@ -63,6 +63,9 @@ class dataUpload():
                     local_path = os.path.join(folder,file)
                     if any(x in file for x in ["meta.csv", "freq.csv", "data.csv"]):
                         remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file[6:8], file)
+
+                    elif any(x in file for x in ["mean.csv"]):
+                        remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file)
 
                     elif any(x in file for x in ["data.tsv"]):
                         remote_path = os.path.join(remoteBasePath, os.path.basename(folder), "data", file[0:4], file[4:6], file)
