@@ -69,7 +69,7 @@ class dataUpload():
                     remove = False# 0 - neodstranovat, 1- odstranit po odeslani, 2 - odstranit po hodine a odeslani
                     local_path = os.path.join(folder,file) # cesta k souboru na stanici
                     type_folder = os.path.basename(os.path.normpath(folder)) # tato promena obsahuje hodnoty jako 'snapshots, meteors, data' (podslozka v rootu stanice)
-                    if any(x in file for x in ["meta.csv", "freq.csv", "data.csv"]):
+                    if any(x in file for x in ["meta.csv", "freq.csv", "data.csv", "meteo.csv"]):
                         remote_path = os.path.join(remoteBasePath, type_folder, file[0:4], file[4:6], file[6:8], file)
                         remove = 2
 
