@@ -107,8 +107,11 @@ class dataUpload():
                         # odeslat soubor na space
                         sftp.put(local_path, remote_path)
 
-                        # ziskani kontrolnich souctu md5 na remote serveru a z lokalnich souboru
-                        stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
+                        # ziskani kontrolnich souctu md5 na remote serveru a z lokalnich souboru                        
+                        if (ssh.exec_command("bash -c 'if which md5sum > /dev/null; then exit 0; else exit 1;fi'") == 0): # pouziti funkce md5 nebo md5sum v zavislosti na systemu
+                            stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5sum " + remote_path + " | cut -d' ' -f1")
+                        else:
+                            stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
                         md5_remote = stdout_remote.read()
                         md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
 
