@@ -1,37 +1,29 @@
-RMDS data uploader
+Measurement station data uploader
 ==================
 
- Python utility which sort measured data to folders and upload it to data server. 
+ Python utility which sort measured data to folders and upload it to data server. It is used in Bolidozor, Ionozor and Geozor projects. 
+
 
 Configuration
 -------------
 
-Edit config.py as is desired for station configuration.
+Edit station configuration file as is desired for your project configuration.
 
-Example: 
+An example for Ionozor project: 
 
-		# Station name
-		Station = "TEST-R0"
-		StationSpace = Station
-		# Observatory name and space.astro.cz logon name
-		UserSpace = "svakov"
-		UserName = UserSpace
-		# Path to unsorted data
-		path = "/home/odroid/Bolidozor/TEST-R0/"
-		# Subdirectory with RAW meteors records ("audio/","meteors")
-		path_audio = "meteors/"
-		# Subdirectory with snapshots ("capture/","snapshots/")
-		path_image = "snapshots/"
-		# Subdirectory with metadata ("data/","data/")
-		path_data = "data/"
-		# Space for sorted data
-		path_sort = "/home/odroid/Bolidozor/TEST-R0/Sort/"
-		# Version of data format
-		Version = "RadObs_14_7"
+        "project": "ionozor",
+        "project_home_folder": "/home/odroid/ionozor/station/",
+        "storage_hostname": "space.astro.cz",
+        "storage_username": "svakov",
+        "storage_stationpath": "/storage/ionozor/VLF/",
+        "storage_protocol": "ssh",
+
+These values are in Ionozor.json which is in station configuration folder.
 
 Usage
 -----
 
-Execute the run.py script:
+The script is usualy executed by station-supervisor. The following command can be used to run the script manually: 
+        ./dataUpload.py ~/ionozor/station/Ionozor.json
 
-        $ python run.py
+Where the argument is a path to station configuration file. 
