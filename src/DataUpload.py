@@ -111,21 +111,17 @@ class dataUpload():
                         sftp.put(local_path, remote_path)
 
                         # ziskani kontrolnich souctu md5 na remote serveru a z lokalnich souboru                        
-			# pouziti funkce md5 nebo md5sum v zavislosti na systemu
-			stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("bash -c 'if which md5sum > /dev/null; then echo 0; else echo 1;fi'")
-			cmdCheck = stdout_remote.read()
+                        # pouziti funkce md5 nebo md5sum v zavislosti na systemu
+                        stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("bash -c 'if which md5sum > /dev/null; then echo 0; else echo 1;fi'")
+                        cmdCheck = stdout_remote.read()
                         if (cmdCheck[:1] is "0"):
                             stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5sum " + remote_path + " | cut -d' ' -f1")
-			    print "command: md5sum"
+                            print "command: md5sum"
                         else:
                             stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
-			    print "command: md5"
+                            print "command: md5"
                         md5_remote = stdout_remote.read()
                         md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
-			print "md5_remote: "
-			print md5_remote
-			print "md5:"
-			print md5
 
                         #print md5_remote, md5
                         if not (md5 in md5_remote): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/station
