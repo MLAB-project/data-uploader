@@ -12,9 +12,9 @@ class dataUpload():
         self.configFile = argv[1]
 
     def start(self):
-        print "started OK"
+        print("started OK")
 
-        print self.configFile
+        print(self.configFile)
         parser = ejson.Parser()
         value = parser.parse_file(self.configFile)
         self.value = value
@@ -57,10 +57,10 @@ class dataUpload():
 
 
         else:
-            print "Uknown project."
+            print("Uknown project.")
 
         for i, folder in enumerate(sync_folders):
-            print i, folder
+            print(i, folder)
             TimeStartFolder = time.time()
             filelist = os.listdir(folder)
             for i2, file in enumerate(filelist):
@@ -89,21 +89,21 @@ class dataUpload():
                         remove = 1
 
                     elif "station" in os.path.dirname(folder) and os.path.isfile(local_path):
-                        print "file in station folder:", file
+                        print("file in station folder:", file)
                         remote_path = os.path.join(remoteBasePath, file)
                         remove = 0
 
                     else:
-                        print os.path.dirname(folder),
-                        print "Skipped:", folder, file
+                        print(os.path.dirname(folder), end=' ')
+                        print("Skipped:", folder, file)
 
                     if remote_path:
-                        print local_path, remote_path
+                        print(local_path, remote_path)
                         # zkontrolovat jestli existuje slozka na remote server, pokud ne - vytvorit ji
                         try:
                             sftp.chdir(os.path.dirname(remote_path))
                         except IOError:
-                            print "create folder:", os.path.dirname(remote_path)
+                            print("create folder:", os.path.dirname(remote_path))
                             ssh.exec_command('mkdir -p ' + repr(os.path.dirname(remote_path)) + "/" )
                             sftp.chdir(os.path.dirname(remote_path))
                         
@@ -114,29 +114,31 @@ class dataUpload():
                         # pouziti funkce md5 nebo md5sum v zavislosti na systemu
                         stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("bash -c 'if which md5sum > /dev/null; then echo 0; else echo 1;fi'")
                         cmdCheck = stdout_remote.read()
-                        if (cmdCheck[:1] is "0"):
+                        if (cmdCheck[:1] == "0"):
                             stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5sum " + remote_path + " | cut -d' ' -f1")
-                            print "command: md5sum"
+                            print("command: md5sum")
                         else:
                             stdin_remote, stdout_remote, stderr_remote = ssh.exec_command("md5 -q "+ remote_path)
-                            print "command: md5"
+                            print("command: md5")
                         md5_remote = stdout_remote.read()
+                        #print("MD5 remote:", md5_remote)
                         md5 = hashlib.md5(open(local_path, 'rb').read()).hexdigest()
+                        #print("MD5", md5)
 
                         #print md5_remote, md5
-                        if not (md5 in md5_remote): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/station
-                            print "soubor se nepodarilo odeslat na server", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote
+                        if not (bytes(md5, 'utf-8') in md5_remote): # na konci md5_remote je odradkovani, kontrola, zdali nejde o soubor v /bolidozor/station
+                            print("soubor se nepodarilo odeslat na server", os.path.basename(os.path.normpath(folder)), md5_remote, md5 in md5_remote)
                         else:
                             #TODO: overeni, jestli se jedna o data, nebo o soubory ve slozce /station/ se musi delat v api na blackhole
-                            print "soubor je na serveru"
+                            print("soubor je na serveru")
                             if remove ==1:
                                 os.remove(local_path)
-                                print "removed"
+                                print("removed")
                             elif remove == 2 and os.path.getmtime(local_path) < time.time() - 4000: # Mazou se soubory starsi nez 4000 sekund, ochrana pred smazanim dat, do kterych se zapisuje prubezne
                                 os.remove(local_path)
-                                print "removed older file"
+                                print("removed older file")
                             else:
-                                print "Soubor zustava na stanici (neodstranuje se)"
+                                print("Soubor zustava na stanici (neodstranuje se)")
                             status = self.UploadEvent(remote_path, md5)
                             if 1 == status:  pass
                             else: neindexovano += [status]
@@ -145,16 +147,16 @@ class dataUpload():
                         #print neindexovano
 
                         
-                except Exception, e:
-                    print "Write error" + repr(e)
+                except Exception as e:
+                    print("Write error" + repr(e))
 
         sftp.close()
         ssh.close()
 
     def seyHelloo(self):
         value = self.value
-        print "SEY HELLO!!!"
-        print value['observatory']
+        print("SEY HELLO!!!")
+        print(value['observatory'])
         payload = {
             'observatory_name': value['observatory'][0]['name'],
             'observatory_owner_login': value['observatory'][0]['owner.login'],
@@ -165,13 +167,13 @@ class dataUpload():
             'station': self.value["configurations"][0]["children"][0]["origin"],
             'hw_version': value['HWversion']
         }
-        print payload
+        print(payload)
         try:
             r = requests.get('http://vo.astro.cz/api/hello/%s/' %(value["project"]), params=payload, timeout = 5)
             return True
-        except Exception, e:
-            print e, e[0]
-            print "ERR, UNABLE TO SAY HELLO"
+        except Exception as e:
+            print(e, e[0])
+            print("ERR, UNABLE TO SAY HELLO")
             return False
 
     def UploadEvent(self, file, md5):
@@ -189,8 +191,8 @@ class dataUpload():
         try:
             r = requests.get('http://vo.astro.cz/api/upload/%s/' %(self.value["project"]), params=payload, timeout=1)
             return 1
-        except Exception, e:
+        except Exception as e:
             #print e, e[0]
-            print "blackhole timeout"
+            print("blackhole timeout")
             return payload
 
